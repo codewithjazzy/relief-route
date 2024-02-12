@@ -1,0 +1,77 @@
+<%- include('partials/headertwo') -%>
+
+<main class="flex-1">
+  <div class="container">
+    <div class="mt-5 py-8 text-center">
+      <ul class="row list-unstyled">
+        <li id="<%= restroom._id %>">
+          <h3 class="text-4xl font-bold"><%= restroom.Name %></h3>
+          <h4 class="text-xl text-gray-400 font-semibold"><%= restroom.BrandName %></h4>
+          <div class="">
+            <form
+              action="/restrooms/upvoteRestroom/<%= restroom.id %>?_method=PUT"
+              method="POST"
+            >
+              <button class="btn btn-outline btn-success btn-sm fa fa-thumbs-up" type="submit"> <%= restroom.Upvotes %></button>
+            </form>
+            <p> </p>
+            <form
+              action="/restrooms/downvoteRestroom/<%= restroom.id %>?_method=PUT"
+              method="POST"
+            >
+              <button class="btn btn-outline btn-error btn-sm fa fa-thumbs-down" type="submit"> <%= restroom.Downvotes %></button>
+            </form>
+          </div>
+          <div class="text-lg">
+            <p><%= restroom.Street1 %></p>
+            <p><%= restroom.City %>, <%= restroom.CountrySubdivisionCode %> <%= restroom.PostalCode %></p> 
+            <p><%= restroom.PhoneNumber %></p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="flex w-full flex-row ml-12 space-x-16 content-center">
+      <div class="pt-12 pl-16 w-72">
+        <h2 class="text-md font-semibold">Add a comment</h2>
+        <form action="/comment/createComment/<%= restroom._id %>" method="POST">
+          <div class="">
+            <label for="comment" class="form-label"></label>
+            <textarea class="textarea textarea-bordered textarea-md w-full max-w-xs" id="comment" name="comment" placeholder="Your comment here..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+
+      <div class="flex flex-col w-3/6 py-12">
+        <% if (comments && comments.length > 0) { %>
+          <ul class="list-unstyled">
+            <% comments.forEach(function(comment) { %>
+              <li class="grid rounded-box place-items-center">
+                <span class=""><%= user.userName %>: </span>
+                <span class=""><%= comment.comment %></span>
+                <br>
+                Posted on: 
+                <%
+                  const date = new Date(comment.createdAt);
+                  const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+                %>
+                <%= formattedDate %>
+                <form
+                action="/comment/deleteComment/<%= comment.id %>?_method=DELETE"
+                method="POST"
+                class="col-3"
+              >
+                <button class="btn btn-xs btn-circle btn-error fa fa-trash" type="submit"></button>
+              </form>
+              </li>
+              <div class="divider"></div>
+            <% }) %>
+          </ul>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/footer') -%>

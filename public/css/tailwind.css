@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+@media (max-width: 480px) {
+    .footer {
+      @apply flex flex-col gap-4;
+    }
+    :where(.navbar > *) {
+      @apply flow-root;
+    }
+    .navbar {
+      @apply flex flex-col
+    }
+    .navbar-start {
+      @apply w-auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer {
+      @apply flex justify-between;
+    }
+    .hero-content{
+      @apply flex flex-col
+    }
+  }

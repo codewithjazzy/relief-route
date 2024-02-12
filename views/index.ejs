@@ -1,11 +1,57 @@
 <%- include('partials/header') -%>
 
-<main class="container">
-    <div class="row justify-content-around mt-5">
-        <a href="/login" class="col-3 btn btn-primary"> Login</a>
-        <a href="/signup" class="col-3 btn btn-primary"> Signup</a>
+<main class="flex-1">
+  <div class="hero min-h-screen" style="background-image: url(https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg);">
+      <div class="hero-overlay bg-opacity-60"></div>
+      <div class="hero-content text-center text-neutral-content">
+        <div class="max-w-md">
+          <h1 class="mb-5 text-5xl font-bold">Nature Called, We Answered.</h1>
+          <p class="mb-5">Never compromise on convenience. Relief Route connects you to a vast network of restrooms, backed by a community dedicated to sharing the most reliable spots.</p>
+        </div>
+        <div class="stats shadow">
+          <div class="stat">
+            <div id="countto1" countTo="73" class="stat-value"></div>
+            <div class="stat-title">Countries</div>
+          </div>
+          <div class="stat">
+            <div id="countto2" countTo="5479" class="stat-value text-secondary"></div>
+            <div class="stat-title">Cities</div>
+          </div>
+          <div class="stat">
+            <div id="countto3" countTo="25600" class="stat-value text-primary"></div>
+            <div class="stat-title">Locations</div>
+          </div>
+        </div>
+        <a href="/signup" class="btn btn-secondary btn-lg">Get Started</a>
+      </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/motion-tailwind/scripts/plugins/countup.min.js"></script>
+  <script>
+    let numbers = document.querySelectorAll("[countTo]");
+
+        numbers.forEach((number) => {
+            let ID = number.getAttribute("id");
+            let value = number.getAttribute("countTo");
+            let countUp = new CountUp(ID, value);
+
+            if (number.hasAttribute("data-decimal")) {
+            const options = {
+                  decimalPlaces: 1,
+                };
+            countUp = new CountUp(ID, 2.8, options);
+            } else {
+            countUp = new CountUp(ID, value);
+            }
+
+            if (!countUp.error) {
+            countUp.start();
+            } else {
+            console.error(countUp.error);
+            number.innerHTML = value;
+            }
+        }); 
+  </script>
 </main>
-    
 
 <%- include('partials/footer') -%>

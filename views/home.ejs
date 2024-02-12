@@ -1,0 +1,48 @@
+<%- include('partials/headertwo') -%>
+
+<main class="flex-1">
+  <div class="px-4 py-6">
+    <h1 class="text-2xl font-bold mb-4">Find the nearest restroom to you!</h1>
+      <form action="/restrooms/findRestroom" method="POST" class="flex flex-wrap gap-2 mb-6">
+          <input type="text" class="input input-bordered input-accent input-sm w-full max-w-xs" id="cityInput" placeholder="City Name" name="city" />
+          <input type="text" class="input input-bordered input-accent input-sm w-full max-w-xs" placeholder="2 Letter State" name="state" />
+          <input type="text" class="input input-bordered input-accent input-sm w-full max-w-xs" placeholder="5 Digit Zip Code" name="zip" />
+          <input type="text" class="input input-bordered input-accent input-sm w-full max-w-xs" placeholder="Country Code eg:KR" name="country" />
+          <button type="submit" class="btn btn-active btn-primary btn-sm">Submit</button> 
+      </form> 
+    <script>
+        document.getElementById('cityInput').addEventListener('input', function(e) {
+            let words = e.target.value.split(' ');
+            e.target.value = words.map(word => 
+                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+            ).join(' ');
+        });
+    </script>
+    <% if (locals.messages && locals.messages.info) { %>
+      <% messages.info.forEach( el => { %>
+        <div class="alert alert-info"><%= el %></div>
+      <% }) %>    
+    <% } %>
+  </div>
+  <div class="flex flex-wrap gap-4 ml-12">
+  <% if (searchPerformed && restrooms && restrooms.length > 0) { %>
+    <% restrooms.forEach(function(restroom) { %>
+      <div id="<%= restroom._id %>" class="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 p-4 border rounded-lg shadow">
+        <h3 class="text-lg font-semibold"><%= restroom.Name %></h3>
+        <h4 class="text-md text-gray-600"><%= restroom.BrandName %></h4>
+        <p class="text-sm">
+          <span> Upvotes: <%= restroom.Upvotes %> </span>
+          <span> Downvotes: <%= restroom.Downvotes %></span>
+        </p>
+        <p class="text-sm"><%= restroom.Street1 %> </p>
+        <p class="text-sm"><%= restroom.City %>, <%= restroom.CountrySubdivisionCode %>, <%= restroom.CountryCode %></p>
+        <a class="btn btn-outline btn-accent btn-sm mt-2" href="/restrooms/getChoice/<%= restroom._id %>">More Info</a>
+      </div>
+    <% }) %>
+  <% } %>
+</div>
+
+</main>
+
+
+<%- include('partials/footer') -%>
