@@ -10,9 +10,9 @@ router.post("/findRestroom", restroomsController.findRestroom);
 //selected restroom
 router.get("/getChoice/:id", restroomsController.getChoice)
 //upvote a restroom
-router.put("/upvoteRestroom/:id", restroomsController.upvoteRestroom);
+router.put("/upvoteRestroom/:id", ensureAuth, restroomsController.upvoteRestroom);
 //downvote a restroom
-router.put("/downvoteRestroom/:id", restroomsController.downvoteRestroom);
+router.put("/downvoteRestroom/:id", ensureAuth, restroomsController.downvoteRestroom);
 
 
 module.exports = router;
