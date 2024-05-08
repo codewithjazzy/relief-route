@@ -48,9 +48,25 @@ module.exports = {
     getChoice: async (req, res) => {
       console.log("Accessing getChoice route with ID:", req.params.id);
       try {
-        const restroom = await Restroom.findById(req.params.id); //request.parameter.id::: the 'id' string in the router (from the url).
-        const comments = await Comment.find({restroom: req.params.id}); 
-        res.render("restroom.ejs", { restroom: restroom, user: req.user, comments: comments }); // the post is 'post' in ejs, req.user is 'user' in ejs. u can then use the properties from the DB collection in EJS like post.title/ post.image/ user.id etc
+        const restroomId = new mongoose.Types.ObjectId(req.params.id);
+        const restroom = await Restroom.findById(restroomId); //request.parameter.id::: the 'id' string in the router (from the url).
+        console.log("Restroom ID:", restroomId)
+
+        const comments = await Comment.aggregate([
+          { $match: { restroom: restroomId } },
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'user',
+              foreignField: '_id',
+              as: 'commenter'
+            }
+          },
+          { $unwind: { path: '$commenter', preserveNullAndEmptyArrays: true } }
+        ]);
+        console.log(comments)
+
+        res.render("restroom.ejs", { restroom: restroom, comments: comments });
       } catch (err) {
         console.log("Error in getChoice:", err);
         res.status(500).send("An error occurred");

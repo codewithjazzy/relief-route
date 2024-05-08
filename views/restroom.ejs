@@ -48,9 +48,10 @@
           <ul class="list-unstyled">
             <% comments.forEach(function(comment) { %>
               <li class="grid rounded-box place-items-center">
-                <span class=""><%= user.userName %>: </span>
-                <span class=""><%= comment.comment %></span>
+                <p class=""><%= comment.comment %></p>
                 <br>
+                <p class=""> Posted by: <%= comment.commenter  ? comment.commenter.userName : 'Anonymous' %> </p>
+                
                 Posted on: 
                 <%
                   const date = new Date(comment.createdAt);
