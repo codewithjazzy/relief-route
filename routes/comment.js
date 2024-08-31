@@ -4,7 +4,7 @@ const commentsController = require("../controllers/comments");
 const { ensureAuth } = require("../middleware/auth");
 
 //Comment Routes - simplified for now
-router.post("/createComment/:id", commentsController.createComment);
-router.delete("/deleteComment/:id", commentsController.deleteComment);
+router.post("/createComment/:id", ensureAuth, commentsController.createComment);
+router.delete("/deleteComment/:id", ensureAuth, commentsController.deleteComment);
 
 module.exports = router;
