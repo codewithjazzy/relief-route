@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://res.cloudinary.com/dwy2rcep0/image/upload/v1707521230/2_akkntq.svg" />
+  <img src="https://res.cloudinary.com/dwy2rcep0/image/upload/v1707528020/avatars/landscape_mf8lg5.svg" />
 </p>
 
 # Relief Route
